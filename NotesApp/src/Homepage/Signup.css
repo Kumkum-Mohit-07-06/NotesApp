@@ -1,0 +1,122 @@
+
+h2{
+    z-index: 2;
+    text-align: center;
+    margin-top: -10px;
+}
+.fullPage{
+    height:60vh;
+    width:25vw;
+    display:flex;
+     align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    margin:auto;
+    margin-top:150px;
+    box-shadow: 0 0 10px #bf00ff, 0 0 20px #bf00ff, 0 0 30px #bf00ff;
+}
+
+.logosign{
+    display:flex;
+    flex-direction: column;
+    height:150px;
+    width:230px;
+}
+.logosign img{
+    height:100%;
+    width:100%;
+}
+.inp{
+    margin-top:40px;
+    display:flex;
+    align-items:center;
+}
+input:focus {
+  
+  outline: none;
+ 
+}
+
+
+i{
+    padding:11px;
+    border:2px solid rgb(82, 80, 80);
+    padding-bottom:10px;
+    border-right:0;
+}
+.mh{
+    border-left:none;
+    border-right:2px solid rgb(82, 80, 80);
+}
+/* input{
+    width:18vw;
+    height:40px;
+    border:2px solid rgb(82, 80, 80);
+    border-left:0;
+} */
+
+button{
+    
+    height: 5vh;
+    width: 20vw;
+    margin-top: 20px;
+    background-color: #320553;
+    /* Dark purple background */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #d580ff, 0 0 16px #d580ff;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+button:hover {
+    box-shadow: 0 0 20px #bf00ff, 0 0 40px #bf00ff, 0 0 60px #bf00ff;
+}
+form{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height:30vh;
+    width:23vw;
+}
+.inp{
+    width:100%;
+}
+ input{
+    width:100%;
+    height:40px;
+    border:2px solid rgb(82, 80, 80);
+    border-left:0;
+}
+.mk{
+    border-right:none;
+    /* width:15.4vw; */
+}
+.link{
+    color:rgb(11, 11, 250);
+    text-decoration: none;
+}
+@media (max-width:1326px){
+    h2{
+        margin-top: -30px;
+    }
+}
+@media (max-width:1132px){
+    .fullPage{
+        width:60vw;
+    }
+    form{
+        width:40vw;
+    }
+    .inp input{
+        width:100%;
+    }
+}
+@media (max-width:440px){
+    .logosign{
+        width:160px;
+    }
+}

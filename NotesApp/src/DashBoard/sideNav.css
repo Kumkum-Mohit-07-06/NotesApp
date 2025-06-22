@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.sideNav {
+    height: 100vh;
+    width:20%;
+    border-right: solid 1px rgb(142, 142, 142);
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    position: relative;
+}
+
+.sideNav ul {
+    list-style: none;
+}
+
+.sideNav ul li {
+
+    padding-top: 40px;
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100;
+}
+
+.b {
+    border: none;
+}
+
+.liDiv {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.liDiv::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: #9113eb;
+    /* same as hover color */
+    transition: width 0.3s ease;
+}
+
+.liDiv:hover::after {
+    width: 100%;
+}
+
+.liDiv:hover {
+    box-shadow: 0 0 20px #bf00ff, 0 0 40px #bf00ff, 0 0 60px #bf00ff;
+}
+
+.logol {
+    height: 20vh;
+    width: 15vw;
+}
+
+.logol img {
+    height: 100%;
+    width: 100%;
+}
+
+.HomeLink {
+    position: absolute;
+    bottom: 20px;
+}
+
+.m {
+    display: none;
+}
+
+@media (max-width:912px) {
+    .sideNav {
+        width: 300px;
+        position: absolute;
+        left: -100%;
+        z-index: 100;
+        transition: left 0.6s ease-in-out;
+        display: flex;
+        border-right: 1px solid black;
+    }
+
+    .sideNav.showdash {
+        left: -5%;
+    }
+    .sideNav.hidedash {
+        left: -100%;
+    }
+    .liDiv {
+        font-size: 16px;
+    }
+
+    .m {
+        display: block;
+        border: none;
+        background: transparent;
+        font-size: 25px;
+    }
+
+    .logol {
+        display: none;
+    } 
+    
+
+}
+.x{
+    height:50px;
+    width:50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right:0px;
+    display:none;
+}

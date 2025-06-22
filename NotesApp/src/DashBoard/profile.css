@@ -1,0 +1,102 @@
+.proMain{
+    margin: auto;
+    height:84vh;
+    width:40vw;
+    /* border:solid 2px white; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 0 10px #bf00ff, 0 0 20px #bf00ff, 0 0 40px #bf00ff;
+}
+
+.profile-label {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  display: inline-block;
+  border: 2px solid #ccc;
+  transition: border 0.3s;
+  margin-top: -190px;
+}
+
+.profile-label:hover {
+  border-color: #666;
+}
+
+.profile-label img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-label .overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.profile-label:hover .overlay {
+  opacity: 1;
+}
+.infoText{
+    background:transparent;
+    padding: 20px 0px;
+    font-size: 20px;
+    text-align: center;
+     text-shadow:
+    0 0 5px #a64dff,
+    0 0 10px #a64dff,
+    0 0 20px #9933ff,
+    0 0 30px #8000ff,
+    0 0 40px #6600cc;
+}
+.infoBox{
+    margin-top: -100px;
+}
+.bh1{
+    position: relative;
+    top:-160px;
+    background-color: transparent;
+}
+.logout{
+    display: flex;
+    
+}
+.logout button{
+    width:200px;
+    margin-left: -40px;
+}
+.l{
+    border:none;
+    background-color: transparent;
+}
+@media (max-width:1149px){
+  .proMain{
+    width:60vw;
+    
+  }
+ 
+}
+@media (max-width:912px){
+  .proMain{
+    width:70vw;
+    margin-top: 100px;
+  }
+}
+@media (max-width:526px){
+  .logout button{
+    width:40vw;
+}
+}

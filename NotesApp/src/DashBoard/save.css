@@ -1,0 +1,124 @@
+
+.b{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parent {
+    height: 100vh;
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    /* border: solid 2px white; */
+    overflow-y: auto; 
+
+}
+
+.del {
+    background: linear-gradient(to bottom, #e74c3c, #c0392b);
+}
+
+.set {
+    cursor: pointer;
+    border-radius: 10px;
+    color: black;
+    /* border: solid 1px black; */
+    height: 30px;
+    width: 30px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.del:hover {
+    background: linear-gradient(to bottom, #c0392b, #e74c3c);
+    /* Reverse gradient on hover */
+}
+
+.edit {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+.star{
+    color:white;
+    background-color:rgb(255, 255, 255);
+}
+.star:hover{
+    color:rgb(255, 255, 255);
+    background-color: #000000;
+}
+
+.edit:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+.icParent {
+    display:flex;
+    background: none;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    margin:4px 0px;
+}
+
+.child {
+    height:40vh;
+    width: 36vw;
+    margin: 20px;
+    padding: 20px 20px;
+    background-color: rgb(226, 12, 137);
+    border-radius: 10px;
+    border: 2px solid white;
+    box-shadow: 0 0 10px #bf00ff, 0 0 10px #bf00ff, 0 0 20px #bf00ff;
+    font-size: 20px;
+    cursor: pointer;
+    position:relative;
+
+}
+
+h3 {
+    padding: 5px;
+    background-color: rgb(226, 12, 137);
+    font-weight: 900;
+}
+
+.a {
+    background-color: rgb(226, 12, 137);
+    height:25vh;
+    overflow:auto;
+    font-size: 20px;
+}
+.a.i{
+    height:40vh;
+}
+span{
+    background-color: rgb(226, 12, 137);
+
+}
+
+.a * {
+    background-color: rgb(226, 12, 137);
+}
+.child.size{
+    text-align: center;
+    height:60vh;
+    width:50vw;
+}
+@media (max-width:1336px){
+    .child{
+        height:40vh;
+        width:80vw;
+    }
+}
+@media (max-width:912px){
+    .child{
+        height:40vh;
+        width:100vw;
+    }
+}
