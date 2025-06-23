@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000
 const app = express();
 app.use(express.json())
 app.use(cors({
-    origin: 'http://localhost:5173', // <- Exact origin of your React app
+    origin: 'https://notesapp-frontend-dayp.onrender.com', // <- Exact origin of your React app
     credentials: true                // <- Allow cookies to be sent
 }));
 app.use(cookieParser())
