@@ -8,7 +8,7 @@ const [expand, setExpand] = useState('')
   
 
   useEffect(() => {
-    fetch('https://notesapp-backend1.onrender.com/dashboard/favourite', {
+    fetch('http://localhost:5000/dashboard/favourite', {
       method: 'GET',
       credentials: 'include'
     }).then(res => {
@@ -27,7 +27,7 @@ const [expand, setExpand] = useState('')
   const handleunmark=async (i)=>{
     const c=notes[i].content;
     const t=notes[i].title;
-    const res=await fetch('https://notesapp-backend1.onrender.com/dashboard/favourite',{
+    const res=await fetch('http://localhost:5000/dashboard/favourite',{
       method:'POST',
       headers: {
         "Content-Type": "application/json"

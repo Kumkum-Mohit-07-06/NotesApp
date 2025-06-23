@@ -53,7 +53,7 @@ const Create = () => {
 
 
 
-    const response = await fetch('https://notesapp-backend1.onrender.com/dashboard/create', {
+    const response = await fetch('http://localhost:5000/dashboard/create', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -74,7 +74,7 @@ const Create = () => {
 
   useEffect(() => {
 
-    fetch('https://notesapp-backend1.onrender.com/dashboard/create', {
+    fetch('http://localhost:5000/dashboard/create', {
       method: "GET",
       credentials: 'include',
     }).then(response => {

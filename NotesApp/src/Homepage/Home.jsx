@@ -11,7 +11,7 @@ const Navbar = () => {
   const { ref: rightRef, inView: rightInView } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   const handleFeedback = async ()=>{
-      const res= await fetch('https://notesapp-backend1.onrender.com/feedback',{
+      const res= await fetch('http://localhost:5000/feedback',{
         method:'POST',
         headers:{
           "Content-Type": "application/json"
