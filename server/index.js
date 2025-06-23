@@ -33,7 +33,11 @@ const db1 = Mysql.createConnection({
     user: process.env.DB1_USER,
     password: process.env.DB1_PASSWORD,
     database: process.env.DB1_NAME,
-    port: process.env.DB1_PORT || 3306
+    port: process.env.DB1_PORT,
+    ssl: {
+    rejectUnauthorized: false
+  }
+
 });
 
 
