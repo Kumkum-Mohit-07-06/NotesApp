@@ -121,5 +121,6 @@
     background-color: transparent;
     position: absolute;
     right:0px;
-    display:none;
+    /* display:none; */
+    color:white;
 }

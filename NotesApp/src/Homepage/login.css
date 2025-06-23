@@ -6,7 +6,7 @@ h2{
 }
 .fullPage{
     height:60vh;
-    width:25vw;
+    width:60vw;
     display:flex;
      align-items:center;
     justify-content:center;
@@ -103,14 +103,20 @@ form{
 }
 @media (max-width:1132px){
     .fullPage{
-        width:60vw;
+        width:90vw;
     }
     form{
-        width:40vw;
+        width:70vw;
     }
     .inp input{
         width:100%;
     }
+}
+@media (max-width:664px){
+    .fullPage{
+        width:100vw;
+    }
+   
 }
 @media (max-width:440px){
     .logologin{

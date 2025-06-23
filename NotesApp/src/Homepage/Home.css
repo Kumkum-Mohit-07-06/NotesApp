@@ -46,7 +46,7 @@ nav ul li:hover {
 
 .logo {
     height: 160px;
-    width: 15vw;
+    width: 180px;
 
 }
 
@@ -98,6 +98,7 @@ nav ul li:hover {
     box-shadow: 0 0 10px #bf00ff, 0 0 20px #bf00ff, 0 0 30px #bf00ff;
     transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
     position: absolute;
+    border-radius: 10px;
 }
 
 .logBtn {
@@ -186,19 +187,20 @@ h1 {
         0 5px 10px rgba(0, 0, 0, 0.2);
     /* soft edge */
     border-radius: 10px;
+    gap:100px;
 }
 
 .aboutcontent {
     background-color: #1a1a1a;
     /* slightly lighter than black */
     width: 50vw;
-    height: fit-content;
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     border-radius: 10px;
-    text-align: center;
+    /* text-align: center; */
 
 }
 
@@ -211,7 +213,7 @@ h1 {
 .logoImg {
     background-color: #1a1a1a;
     border-radius: 10px;
-    width: 23vw;
+    width: 300px;
 
 }
 
@@ -409,6 +411,7 @@ h1 {
 
     #aboutus {
         flex-direction: column;
+        
     }
 
     .logoImg {
@@ -422,13 +425,15 @@ h1 {
     }
 
     .aboutcontent {
-        width: 60vw;
+        width: 80vw;
+        margin-top: -130px;
+        height:fit-content;
     }
 }
 
 @media (max-width:754px) {
     .logBtn {
-        width: 35vw;
+        width: 250px;
     }
 
     .btnLink {
@@ -449,22 +454,24 @@ h1 {
 }
 
 @media (max-width:694px) {
-    nav {
+    /* nav {
         justify-content: center;
-    }
+    } */
 
     .ham {
 
         position: relative;
-        right: 4vw;
+        right: 10px;
 
 
     }
 
-    .logo {
-        margin-left: -100px;
+     .logo {
+        margin-left: -50px;
     }
-
+    .m2{
+        margin-right:10px;
+    }
     .images {
         flex-direction: column;
         transform: none;
@@ -526,3 +533,26 @@ h1 {
     }
 }
 
+@media (max-width:529px){
+    .logo{
+        margin-left: 10px;
+        width:200px;
+    }
+    .logo img{
+        width:100%;
+    }
+    .secCon{
+        width:400px;
+    }
+}
+@media (max-width:439px){
+    
+    .secCon{
+        width:90vw;
+    }
+}
+@media (max-width:484px){
+    .m2{
+        margin-right:20px;
+    }
+}

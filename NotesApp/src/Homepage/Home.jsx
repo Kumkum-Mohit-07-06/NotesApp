@@ -74,7 +74,7 @@ const Navbar = () => {
           <p>About us</p>
           Welcome to Your Notes App your simple, secure, and smart digital notebook.
           We believe that ideas are powerful, and capturing them should be effortless.
-          Our app is designed to help you write, save, and organize your thoughts-whether it's a quick reminder,<br/> a class note, a creative draft, or <br/>your daily journal. <br/>With an intuitive interface, cloud-backed storage, and customizable features, your notes are always accessible, editable, and safe.
+          Our app is designed to help you write, save, and organize your thoughts-whether it's a quick reminder, a class note, a creative draft, or your daily journal. With an intuitive interface, cloud-backed storage, and customizable features, your notes are always accessible, editable, and safe.
         </div>
       </div>
     <br/><br/><br/> <br/><br/>

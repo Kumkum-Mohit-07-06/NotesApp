@@ -71,7 +71,7 @@ const login = () => {
             <i className="fa-solid fa-lock"></i><input type="password" name="password" className="mk" ref={ref2} placeholder="Password" onChange={e => setPassword(e.target.value)} /><i className="fa-solid fa-eye-slash mh" ref={ref1} onClick={handleEye}></i>
           </div>
           <button type="submit">Log in</button>
-          {error && <p style={{ color: "red" , margin:"10px"}}>{error}</p>}
+          {error && <p style={{ color: "red" , margin:"10px", width:"100%", textAlign:"center"}}>{error}</p>}
         </form>
       </div>
     </>
