@@ -21,7 +21,7 @@ const profile = () => {
     const formdata = new FormData()
     formdata.append('profile', selfile)
 
-    const res = await fetch("http://localhost:5000/dashboard/profile",
+    const res = await fetch("https://notesapp-backend1.onrender.com/dashboard/profile",
       {
         method: "POST",
         credentials: "include",
@@ -33,7 +33,7 @@ const profile = () => {
      
     } else {
      
-      const imageURL = `http://localhost:5000/upload/${data.file}`;
+      const imageURL = `https://notesapp-backend1.onrender.com/upload/${data.file}`;
       alert(imageURL)
       setImage(imageURL);
       // document.getElementById('profile-upload').value = null;
@@ -42,14 +42,14 @@ const profile = () => {
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/dashboard/profile', {
+    fetch('https://notesapp-backend1.onrender.com/dashboard/profile', {
       method: 'GET',
       credentials: 'include'
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.profilePic) {
-          setImage(`http://localhost:5000/upload/${data.profilePic}`);
+          setImage(`https://notesapp-backend1.onrender.com/upload/${data.profilePic}`);
         }
         setEmailu(data.emailUser)
       })
@@ -61,7 +61,7 @@ const profile = () => {
   async function handleLogout() {
     const confirmDelete = window.confirm('Are you sure you want to delete your account? This cannot be undone!');
     if (!confirmDelete) return;
-    const res = await fetch("http://localhost:5000/logout",
+    const res = await fetch("https://notesapp-backend1.onrender.com/logout",
       {
         method: "POST",
         credentials: "include",

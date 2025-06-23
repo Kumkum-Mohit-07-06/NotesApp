@@ -53,7 +53,7 @@ const Create = () => {
 
 
 
-    const response = await fetch('http://localhost:5000/dashboard/create', {
+    const response = await fetch('https://notesapp-backend1.onrender.com/dashboard/create', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -74,7 +74,7 @@ const Create = () => {
 
   useEffect(() => {
 
-    fetch('http://localhost:5000/dashboard/create', {
+    fetch('https://notesapp-backend1.onrender.com/dashboard/create', {
       method: "GET",
       credentials: 'include',
     }).then(response => {
@@ -88,7 +88,7 @@ const Create = () => {
         setTitle(data[0].title)
         editorRef.current.innerHTML = data[0].content;
       }
-         fetch('http://localhost:5000/dashboard/save', {
+         fetch('https://notesapp-backend1.onrender.com/dashboard/save', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 credentials: 'include',
@@ -97,7 +97,7 @@ const Create = () => {
         
         
         }).then(e=>{
-           fetch("http://localhost:5000/dashboard/save", {
+           fetch("https://notesapp-backend1.onrender.com/dashboard/save", {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           credentials: 'include',

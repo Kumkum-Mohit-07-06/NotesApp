@@ -8,7 +8,7 @@ const save = () => {
     const [expand, setExpand] = useState('')
 
     useEffect(() => {
-        fetch('http://localhost:5000/dashboard/save', { credentials: 'include' }).then(response => {
+        fetch('https://notesapp-backend1.onrender.com/dashboard/save', { credentials: 'include' }).then(response => {
             if (!response.ok) {
                 throw new Error(`Network is not ok: ${response.status}`)
             }
@@ -26,7 +26,7 @@ const save = () => {
         
         let c = notes[i].content;
         let t = notes[i].title;
-        const res = await fetch('http://localhost:5000/dashboard/save', {
+        const res = await fetch('https://notesapp-backend1.onrender.com/dashboard/save', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -47,7 +47,7 @@ const save = () => {
     }
 
     const handleStar = async (i) => {
-        const res = await fetch('http://localhost:5000/dashboard/save', {
+        const res = await fetch('https://notesapp-backend1.onrender.com/dashboard/save', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -66,7 +66,7 @@ const save = () => {
     const handleEdit = async (i) => {
         let c = notes[i].content;
         let t = notes[i].title;
-        const res = await fetch('http://localhost:5000/dashboard/save', {
+        const res = await fetch('https://notesapp-backend1.onrender.com/dashboard/save', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
