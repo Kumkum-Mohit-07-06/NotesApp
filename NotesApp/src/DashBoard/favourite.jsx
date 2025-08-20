@@ -45,7 +45,9 @@ const [expand, setExpand] = useState('')
 
 
   }
-
+  const handleSize = (i) => {
+       setExpand(expand === i? null : i)        
+    }
   return (
     <div className='b'>
       <div className='favMAIN'>
@@ -53,7 +55,7 @@ const [expand, setExpand] = useState('')
           const cleanContent = DOMPurify.sanitize(dat.content);
 
           return (
-            <div className='child' key={index}>
+            <div className={`child ${expand === index? 'size' : ''}`} onClick={()=> handleSize(index)} key={index}>
               <h3>{dat.title}</h3>
               {/* Use dangerouslySetInnerHTML to render the HTML */}
               <div className={`a ${expand === index? 'i' : ''}`} dangerouslySetInnerHTML={{ __html: cleanContent }} />

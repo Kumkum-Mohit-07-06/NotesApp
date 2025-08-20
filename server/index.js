@@ -102,7 +102,7 @@ app.post('/login', async (req, res) => {
 
             } else {
                 console.log("Password mismatch for user:", user.emailUser);
-                return res.status(401).json({ message: "Invalid credentials" }); // More generic message
+                return res.status(401).json({ message: "Invalid credentials" });
             }
         } catch (compareError) {
             console.error("Error during bcrypt.compare:", compareError);
