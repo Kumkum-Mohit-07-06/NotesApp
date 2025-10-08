@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import Mysql from 'mysql2'
+import nodemailer from 'nodemailer'
+import ratelimit from 'express-rate-limit'
 import cookieParser from 'cookie-parser'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
@@ -9,6 +11,7 @@ dotenv.config({ path: './database.env' });
 import bcrypt from 'bcryptjs'
 import multer from 'multer'
 import path from "path"
+
 const port = 5000
 const app = express();
 app.use(express.json())
@@ -28,6 +31,26 @@ const storage = multer.diskStorage({
 })
 const uploads = multer({ storage })
 app.use('/upload', express.static('upload'));
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: "yournotesapp8@gmail.com",
+        pass: 'xvhukglxqeflozfg',
+    },
+});
+
+const otpLimiter = ratelimit({
+    windowMs: 60 * 1000,
+    max: 3,
+    message: "Too many OTP requests. Try again Later.",
+});
+
+function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
 const db1 = Mysql.createConnection({
     host: process.env.DB1_HOST,
     user: process.env.DB1_USER,
@@ -39,23 +62,76 @@ const db1 = Mysql.createConnection({
   }
 
 });
+app.post('/send-otp', otpLimiter , async(req,res)=>{
+    const {email} = req.body;
+    if(!isValidEmail(email)){
+        return res.status(400).json({message:"Invalid email format"});
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    try{
+        await transporter.sendMail({
+            from : 'sureshkumarsoni77913@gmail.com',
+            to: email,
+            subject: "Your OTP code",
+            text: `Your OTP is: ${otp}`,
+        });
+
+        await db1.execute('INSERT INTO emailotps(emailo, otp) VALUES(?,?)', [email, otp]);
+
+        res.json({message: "OTP sent successfully"});
+    } catch(err){
+        res.status(500).json({message:" Failed to send OTP", error: err.message});
+    }
+});
+
+app.post('/verify-otp', async(req,res)=>{
+    const {email, otp} = req.body;
+     db1.execute('SELECT * FROM emailotps WHERE emailo=? AND otp=? ORDER BY created_at DESC LIMIT 1', [email, otp], (err,results) =>{
+        if(err){
+            return res.status(500).send("internal server errorr");
+        }
+        if(results.length === 0){
+            return res.status(401).send("invalid otp");
+        }
+
+        const otpEntry= results[0];
+        const otpTime = new Date(otpEntry.created_at);
+    const now = new Date();
+    const diffMinutes = (now -otpTime) / (1000 * 60);
+
+    if(diffMinutes >5){
+        return res.status(400).json({message:"OTP expired"});
+    }
+
+    db1.execute("DELETE FROM emailotps WHERE emailo=?",
+        [email],
+        (deleteerr)=>{
+            if(deleteerr){
+                return res.status(500).send("error cleaning up OTP");
+            }
+            return res.status(200).send("OTP Verified Successfully");
+        }
+    );
+    });
+});
+
 
 
 
 
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body
-    console.log(req.body);
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(hashedPassword)
     db1.query('SELECT 1 FROM user WHERE emailUser = ?', [email], (err, results) => {
   if (err) return res.status(500).json({message:'Database error'});
 
   if (results.length > 0) {
     return res.status(200).json({message:'This email is already registered!. Please Login instead.'});
   } else {
-    db1.query('INSERT INTO user(emailUser, passwordUser) VALUES (?, ?)', [email, password], (err, result) => {
+    db1.query('INSERT INTO user(emailUser, passwordUser) VALUES (?, ?)', [email, hashedPassword], (err, result) => {
       if (err) return res.status(500).json({message:'Database error'});;
       return res.status(200).json({message:'Signup successful!'});
     });
@@ -71,7 +147,6 @@ app.post('/login', async (req, res) => {
     const valuess = [email]
     db1.query(sql, valuess, async (err, result) => {
         if (err) {
-            console.log("invalid credential")
             return res.status(500).json({ message: "Internal error" });
         }
 
@@ -80,18 +155,14 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ message: "User not found" });
         }
 
-        const user = await result[0];
+        const user =  result[0];
 
         try {
-            const isPasswordMatch =  bcrypt.compare(password, user.passwordUser);
-            console.log("Password comparison result (isPasswordMatch):", isPasswordMatch);
+            const isPasswordMatch =   bcrypt.compareSync(password, user.passwordUser);
 
             if (isPasswordMatch) {
 
                 const token = jwt.sign({ userId: user.id }, process.env.JWT_TOKEN);
-                console.log(user.id)
-                console.log("Login successful for user:", user.emailUser);
-                console.log(token);
                 res.cookie('token', token, {
                     httpOnly: true,
                     sameSite: 'Lax',
@@ -101,11 +172,9 @@ app.post('/login', async (req, res) => {
 
 
             } else {
-                console.log("Password mismatch for user:", user.emailUser);
                 return res.status(401).json({ message: "Invalid credentials" });
             }
         } catch (compareError) {
-            console.error("Error during bcrypt.compare:", compareError);
             return res.status(500).json({ message: "Internal server error during password comparison" });
         }
     })
@@ -143,7 +212,6 @@ app.get('/dashboard/save', (req, res) => {
     if (!token) return res.status(401).json({ message: 'token not found' });
     jwt.verify(token, process.env.JWT_TOKEN, (err, decoder) => {
         if (err) return res.status(403).json({ message: 'not verified' });
-        console.log(decoder);
         const userId = decoder.userId;
         const query = 'select content, title from notes where user_id=?'
         db1.execute(query, [userId], (errr, results) => {
@@ -160,7 +228,6 @@ app.post('/dashboard/save', (req, res) => {
     if (!token) return res.status(401).json({ message: 'token not found' });
     jwt.verify(token, process.env.JWT_TOKEN, (errrr, decoder) => {
         if (errrr) return res.status(403).json({ message: 'not verified' });
-        console.log(decoder);
         const userId = decoder.userId;
         if (action === 'delete') {
             const query = 'delete from notes where content=? and title=? and user_id=?'
@@ -254,7 +321,6 @@ app.get('/dashboard/favourite', (req, res) => {
     if (!token) return res.status(401).json({ message: 'token not found' });
     jwt.verify(token, process.env.JWT_TOKEN, (err, decoder) => {
         if (err) return res.status(403).json({ message: 'not verified' });
-        console.log(decoder);
         const userId = decoder.userId;
         const isFavourite = decoder.favourite;
         const query = 'select content, title from notes where favourite=? and user_id=?'
@@ -274,7 +340,6 @@ app.post('/dashboard/favourite', (req, res) => {
     if (!token) return res.status(401).json({ message: 'token not found' });
     jwt.verify(token, process.env.JWT_TOKEN, (err, decoder) => {
         if (err) return res.status(403).json({ message: 'not verified' });
-        console.log(decoder);
         const userId = decoder.userId;
         const isFavourite = decoder.favourite;
         const query = 'update notes set favourite=? where user_id=? and content=? '
@@ -290,12 +355,10 @@ app.get("/dashboard/create", (req, res) => {
     if (!token) return res.status(401).json({ message: 'token not found' });
     jwt.verify(token, process.env.JWT_TOKEN, (err, decoder) => {
         if (err) return res.status(403).json({ message: 'not verified' });
-        console.log(decoder);
         const userId = decoder.userId;
         const query = 'select content, title from notes where edit=? and user_id=?'
         db1.query(query, [true, userId], (errr, results) => {
             if (errr) return res.status(500).json({ message: 'Database error' });
-            console.log(results)
             res.json(results);
         })
     })

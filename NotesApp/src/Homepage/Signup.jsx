@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios';
 import { useRef, useState } from 'react'
 import './Signup.css'
 import { Link } from 'react-router-dom'
@@ -9,6 +10,9 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors , setErrors] = useState("")
+    const [otpSent , setOtpSent] = useState(false)
+    const [otpVerified , setOtpVerified] = useState(false)
+    const [otp , setOtp] = useState('');
 
     const handleEye = () => {
         if (ref2.current.type === "password") {
@@ -44,9 +48,29 @@ const Signup = () => {
         }
         
         }else{
-            setErrors("Email and Password cannot be empty")
+            setErrors("Email cannot be empty")
         }
         
+    }
+
+    const sendOtp = async ()=>{
+        try{
+            const res = await axios.post('http://localhost:5000/send-otp', {email});
+            setOtpSent(true);
+            setErrors(res.data.message);
+        } catch(err){
+            setErrors(err.response?.data?.message || "Error sending OTP");
+        }
+    };
+
+    const verifyOtp = async ()=>{
+        try{
+            const res = await axios.post('http://localhost:5000/verify-otp', {email, otp});
+            setOtpVerified(true);
+            setErrors(res.data.message);
+        } catch(err){
+            setErrors(err.response?.data?.message || "Error verifying OTP ");
+        }
     }
 
     return (
@@ -59,12 +83,26 @@ const Signup = () => {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="inp">
-                        <i className="fa-solid fa-envelope"></i><input type="email" name="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                        <i className="fa-solid fa-envelope"></i><input type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} disabled={otpSent}/>
                     </div>
-                    <div className="inp">
-                        <i className="fa-solid fa-lock"></i><input type="password" name="password" className="mk" ref={ref2} placeholder="Password" onChange={e => setPassword(e.target.value)} /><i className="fa-solid fa-eye-slash mh" ref={ref1} onClick={handleEye}></i>
+
+                    {!otpSent ? (
+                        <button onClick={sendOtp}>Send OTP</button>
+                    ) : !otpVerified ? (
+                        <>
+                        <input type="text" placeholder="Enter OTP" value={otp} onChange={e => setOtp(e.target.value)} style={{color:"white" }} />
+                        <button onClick={verifyOtp}>Verify OTP</button>
+                        </>
+                    ) : (
+                        <>
+                        <div className="inp">
+                        <i className="fa-solid fa-lock"></i><input type="password" name="password" className="mk" ref={ref2} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} /><i className="fa-solid fa-eye-slash mh" ref={ref1} onClick={handleEye}></i>
                     </div>
                     <button type="submit">Sign up</button>
+                        </>
+                    )}
+
+                    
                 {errors && <p style={{ color: "red" , margin:"10px"}}>{errors}</p>}
                 </form>
                 <p>Already have an account?</p><Link className="link" to="/login">log in</Link>
