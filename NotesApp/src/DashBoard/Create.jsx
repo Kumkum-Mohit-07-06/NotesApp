@@ -129,6 +129,7 @@ const Create = () => {
           <button className="colorcls c1" onClick={() => applyColor('rgb(213, 166, 26)')}></button>
           <button className="colorcls c2" onClick={() => applyColor('rgb(17, 247, 17)')}></button>
           <button className="colorcls c3" onClick={() => applyColor('rgb(0, 191, 255)')}></button>
+          <button className="colorcls c4" onClick={() => applyColor('rgb(255,255,255)')}></button>
         </div>
 
 
