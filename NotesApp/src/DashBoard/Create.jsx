@@ -88,24 +88,24 @@ const Create = () => {
         setTitle(data[0].title)
         editorRef.current.innerHTML = data[0].content;
       }
-         fetch('https://notesapp-backend1.onrender.com/dashboard/save', {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                credentials: 'include',
-                body: JSON.stringify({c: data[0].content, t: data[0].title , action: "delete" })
-            });
+        //  fetch('http://localhost:5000/dashboard/save', {
+        //         method: 'POST',
+        //         headers: { "Content-Type": "application/json" },
+        //         credentials: 'include',
+        //         body: JSON.stringify({c: data[0].content, t: data[0].title , action: "delete" })
+        //     });
         
         
-        }).then(e=>{
-           fetch("https://notesapp-backend1.onrender.com/dashboard/save", {
-          method: 'POST',
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify({ action: "clearEdit" })
+         })//.then(e=>{
+        //    fetch("http://localhost:5000/dashboard/save", {
+        //   method: 'POST',
+        //   headers: { "Content-Type": "application/json" },
+        //   credentials: 'include',
+        //   body: JSON.stringify({ action: "clearEdit" })
            
-        })}).catch(err => {
+        // })}).catch(err => {
 
-        })
+        // })
 
     
 
