@@ -47,8 +47,13 @@ const Signup = () => {
           window.location.href='/login';     
         }
         
-        }else{
-            setErrors("Email cannot be empty")
+        }
+        if(email.length === 0){
+            setErrors("Email cannot be empty");
+        }
+
+        if(password.length === 0){
+            setErrors("Password cannot be empty");
         }
         
     }

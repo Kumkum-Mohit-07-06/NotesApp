@@ -102,7 +102,12 @@ app.post('/verify-otp', async(req,res)=>{
     const diffMinutes = (now -otpTime) / (1000 * 60);
 
     if(diffMinutes >5){
-        return res.status(400).json({message:"OTP expired"});
+        db1.execute("DELETE FROM emailotps WHERE emailo=?",[email], (errexpi)=>{
+            if(errexpi){
+            console.error("error in deleting expiring otp");
+            }
+            return res.status(400).json({message:"OTP expired"});
+        });
     }
 
     db1.execute("DELETE FROM emailotps WHERE emailo=?",
