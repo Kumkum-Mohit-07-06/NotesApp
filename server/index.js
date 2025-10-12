@@ -72,7 +72,7 @@ app.post('/send-otp', otpLimiter , async(req,res)=>{
 
     try{
         await transporter.sendMail({
-            from : 'sureshkumarsoni77913@gmail.com',
+            from : 'yournotesapp8@gmail.com',
             to: email,
             subject: "Your OTP code",
             text: `Your OTP is: ${otp}`,
