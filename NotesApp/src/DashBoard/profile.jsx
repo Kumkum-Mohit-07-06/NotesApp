@@ -33,8 +33,7 @@ const profile = () => {
      
     } else {
      
-      const imageURL = `http://localhost:5000/upload/${data.file}`;
-      alert(imageURL)
+      const imageURL = `http://localhost:5000/profile-image/${data.file}`;
       setImage(imageURL);
       // document.getElementById('profile-upload').value = null;
     }
@@ -49,7 +48,7 @@ const profile = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.profilePic) {
-          setImage(`http://localhost:5000/upload/${data.profilePic}`);
+          setImage(`http://localhost:5000/profile-image/${data.profilePic}`);
         }
         setEmailu(data.emailUser)
       })

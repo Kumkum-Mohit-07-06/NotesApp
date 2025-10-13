@@ -11,6 +11,11 @@ dotenv.config({ path: './database.env' });
 import bcrypt from 'bcryptjs'
 import multer from 'multer'
 import path from "path"
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+import fs from "fs"
 
 const port = 5000
 const app = express();
@@ -30,7 +35,7 @@ const storage = multer.diskStorage({
     }
 })
 const uploads = multer({ storage })
-app.use('/upload', express.static('upload'));
+// app.use('/upload', express.static('upload'));
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -171,7 +176,7 @@ app.post('/login', async (req, res) => {
                 res.cookie('token', token, {
                     httpOnly: true,
                     sameSite: 'Lax',
-                    secure: false // Make true only in production with HTTPS
+                    secure: true // Make true only in production with HTTPS
                 }).json({ message: 'Login successful' });
 
 
@@ -285,6 +290,43 @@ app.post("/dashboard/profile", uploads.single('profile'), (req, res) => {
         })
     })
 })
+
+app.get('/profile-image/:filename', async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ message: 'Token missing' });
+
+  jwt.verify(token, process.env.JWT_TOKEN, async (err, decoded) => {
+    if (err) return res.status(403).json({ message: 'Invalid token' });
+
+    const userid = decoded.userId;
+    const requestedFile = req.params.filename;
+
+    // Get user's saved image from DB
+    db1.execute('SELECT profilePic FROM user WHERE id = ?', [userid] , (errr,results)=>{
+        if (results.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const userImage = results[0].profilePic;
+
+    // Check if requested image matches user's image
+    if (userImage !== requestedFile) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const filePath = path.join(__dirname, 'upload', requestedFile);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) return res.status(404).json({ message: 'Image not found' });
+      res.sendFile(filePath);
+    });
+
+    });
+
+    
+  });
+});
+
+
 app.get('/dashboard/profile', (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ message: 'Token missing' });
