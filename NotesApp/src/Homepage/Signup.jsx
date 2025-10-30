@@ -95,7 +95,7 @@ const Signup = () => {
                         <button onClick={sendOtp}>Send OTP</button>
                     ) : !otpVerified ? (
                         <>
-                        <input type="text" placeholder="Enter OTP" value={otp} onChange={e => setOtp(e.target.value)} style={{color:"white" }} />
+                        <input type="password" placeholder="Enter OTP" value={otp} onChange={e => setOtp(e.target.value)} style={{color:"white" }} />
                         <button onClick={verifyOtp}>Verify OTP</button>
                         </>
                     ) : (
